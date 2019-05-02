@@ -3,6 +3,7 @@ package controllers;
 import com.fasterxml.jackson.databind.JsonNode;
 import middleware.Attributes.Secured;
 import middleware.Dtos.Account.LoginDto;
+import middleware.Dtos.Account.RegisterDto;
 import middleware.Dtos.UserDto;
 import middleware.Bases.BaseController;
 import middleware.Bases.IController;
@@ -124,6 +125,20 @@ public class UserController extends BaseController implements IController {
         GeneralResult<JsonNode> result = new GeneralResult<>();
         JsonNode jsonData = Json.newObject().put("access_token", tokenResult.getData());
         result.Success(jsonData);
+        return ok(Json.toJson(result));
+    }
+
+    public Result register() {
+        Form<RegisterDto> form = _formFactory.form(RegisterDto.class).bind(request().body().asJson());
+        if (form.hasErrors()) {
+            return errorResult(BAD_REQUEST, new GeneralResult(InvalidModelStateException.class.getSimpleName(), form.allErrors().get(0).key() + ": " + form.allErrors().get(0).message()));
+        }
+
+        GeneralResult<Boolean> result = _userService.register(form.get());
+        if (result.isFailed()) {
+            return errorResult(INTERNAL_SERVER_ERROR, result);
+        }
+
         return ok(Json.toJson(result));
     }
 }
