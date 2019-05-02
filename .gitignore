@@ -16,3 +16,6 @@ generated.truststore
 .settings/
 .cache-main
 .cache-tests
+
+# Custom ignores
+.g8
