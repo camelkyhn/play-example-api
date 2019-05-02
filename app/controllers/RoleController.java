@@ -1,5 +1,6 @@
 package controllers;
 
+import middleware.Attributes.Secured;
 import middleware.Dtos.RoleDto;
 import middleware.Bases.BaseController;
 import middleware.Bases.IController;
@@ -12,11 +13,13 @@ import play.data.Form;
 import play.data.FormFactory;
 import play.libs.Json;
 import play.mvc.Result;
+import play.mvc.Security;
 import services.Role.RoleService;
 
 import javax.inject.Inject;
 import java.util.List;
 
+@Security.Authenticated(Secured.class)
 public class RoleController extends BaseController implements IController {
 
     private FormFactory _formFactory;
