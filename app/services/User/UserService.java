@@ -5,8 +5,10 @@ import middleware.Bases.IService;
 import middleware.Bases.Service;
 import middleware.Core.GeneralResult;
 import middleware.Dtos.Account.LoginDto;
+import middleware.Dtos.Account.RegisterDto;
 import middleware.Dtos.UserDto;
 import middleware.Entities.User;
+import middleware.Enums.Status;
 import middleware.Exceptions.LoginFailedException;
 import middleware.Exceptions.NotFoundException;
 import middleware.Filters.UserFilter;
@@ -72,10 +74,6 @@ public class UserService extends Service<Long, User> implements IService<Long, U
     public GeneralResult<Boolean> save(UserDto dto) {
         GeneralResult<Boolean> result = new GeneralResult<>();
         try {
-            if (dto == null) {
-                throw new NotFoundException(UserDto.class.getSimpleName());
-            }
-
             GeneralResult<User> userResult = detail(dto.getUpdatedUserId());
             if (userResult.isFailed()) {
                 throw new NotFoundException(User.class.getSimpleName());
@@ -149,6 +147,20 @@ public class UserService extends Service<Long, User> implements IService<Long, U
             }
 
             result = _jwtService.getToken(user.getId(), dto.refreshToken);
+        }
+        catch (Exception exception) {
+            result.Error(exception);
+        }
+
+        return result;
+    }
+
+    public GeneralResult<Boolean> register(RegisterDto dto) {
+        GeneralResult<Boolean> result = new GeneralResult<>();
+        try {
+            // Created by admin
+            UserDto newUser = new UserDto(dto.name, dto.email, dto.password, Status.Active, 1L);
+            result = save(newUser);
         }
         catch (Exception exception) {
             result.Error(exception);
