@@ -19,8 +19,16 @@ public class UserDto extends BaseDto {
     public UserDto() {
     }
 
-    public UserDto(Long id, Status status, Long updatedUser) {
-        super(id, status, updatedUser);
+    public UserDto(Long id, Status status, Long updatedUserId) {
+        super(id, status, updatedUserId);
+    }
+
+    public UserDto(String name, String email, String password, Status status, Long updatedUserId) {
+        this.name     = name;
+        this.email    = email;
+        this.password = password;
+        setStatus(status);
+        setUpdatedUserId(updatedUserId);
     }
 
     public String getName() {
