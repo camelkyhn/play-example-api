@@ -1,0 +1,22 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+GET           /role/detail/:id            controllers.RoleController.detail(id: Long)
+GET           /role/list                  controllers.RoleController.list
+POST          /role/create                controllers.RoleController.create
+PUT           /role/edit                  controllers.RoleController.edit
+DELETE        /role/delete/:id            controllers.RoleController.delete(id: Long)
+
+GET           /user/detail/:id            controllers.UserController.detail(id: Long)
+GET           /user/list                  controllers.UserController.list
+POST          /user/create                controllers.UserController.create
+PUT           /user/edit                  controllers.UserController.edit
+DELETE        /user/delete/:id            controllers.UserController.delete(id: Long)
+POST          /user/login                 controllers.UserController.login
+
+GET           /userRole/detail/:id        controllers.UserRoleController.detail(id: Long)
+GET           /userRole/list              controllers.UserRoleController.list
+POST          /userRole/create            controllers.UserRoleController.create
+PUT           /userRole/edit              controllers.UserRoleController.edit
+DELETE        /userRole/delete/:id        controllers.UserRoleController.delete(id: Long)
