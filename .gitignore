@@ -1,7 +1,7 @@
 logs
 *.iml
 target
-.idea
+.idea/
 .idea_modules
 .vscode
 RUNNING_PID
